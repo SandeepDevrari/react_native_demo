@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React, {useState} from 'react';
-import { StyleSheet, Text, View, FlatList } from 'react-native';
+import { StyleSheet, Text, View, FlatList, TouchableOpacity } from 'react-native';
 
 //import custom components
 // import FirstHook from './components/UseStateHook'
@@ -8,7 +8,7 @@ import { StyleSheet, Text, View, FlatList } from 'react-native';
 
 export default function App() {
 
-  const [dataa, setData] = useState([
+  const [data, setData] = useState([
     {name:"A", id:1},
     {name:"B", id:2},
     {name:"C", id:3},
@@ -20,6 +20,13 @@ export default function App() {
     {name:"I", id:9},
     {name:"J", id:10}
   ])
+
+  const filterData= (item)=>{
+    setData((preData)=>{
+      return preData.filter(d=> d.id!=item.id)
+    })
+  };
+
   return (
     <View style={styles.container}>
       <FlatList
@@ -29,10 +36,15 @@ export default function App() {
           );
         }}
         numColumns={4}
-        data={dataa}
+        data={data}
         renderItem={({item})=>{
           return(
-            <Text style={styles.text}>{item.name}</Text>
+            <TouchableOpacity
+              onPress={()=>{
+                filterData(item)
+              }}>
+              <Text style={styles.text}>{item.name}</Text>
+            </TouchableOpacity>
           );
         }}/>
     </View>
