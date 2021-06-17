@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React, {useState} from 'react';
-import { StyleSheet, Text, View, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, FlatList } from 'react-native';
 
 //import custom components
 // import FirstHook from './components/UseStateHook'
@@ -8,7 +8,7 @@ import { StyleSheet, Text, View, ScrollView } from 'react-native';
 
 export default function App() {
 
-  const [data, setData] = useState([
+  const [dataa, setData] = useState([
     {name:"A", id:1},
     {name:"B", id:2},
     {name:"C", id:3},
@@ -22,17 +22,19 @@ export default function App() {
   ])
   return (
     <View style={styles.container}>
-      <ScrollView>
-      {
-        data.map((item)=>{
+      <FlatList
+        keyExtractor={(item)=>{
           return(
-            <View key={item.id}>
-              <Text style={styles.text}>{item.name}</Text>
-            </View>
+            item.id
           );
-        })
-      }
-      </ScrollView>
+        }}
+        numColumns={4}
+        data={dataa}
+        renderItem={({item})=>{
+          return(
+            <Text style={styles.text}>{item.name}</Text>
+          );
+        }}/>
     </View>
   );
 }
